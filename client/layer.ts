@@ -49,7 +49,7 @@ export class Layer implements ILayerView {
   public map = new Map<string, string>();
 
   public delete(position?: Vector) {
-    this.map.delete(position.toString());
+    this.map.delete(position!.toString());
   }
 
   public clear() {
@@ -66,9 +66,9 @@ export class Layer implements ILayerView {
     }
   }
 
-  public get(position: Vector) {
+  public get(position: Vector): string {
     const key = position.toString();
-    return this.map.has(key) ? this.map.get(position.toString()) : null;
+    return this.map.has(key) ? (this.map.get(key) ?? "") : "";
   }
 
   public has(position: Vector) {
@@ -122,12 +122,12 @@ export class LayerView implements ILayerView {
       if (this.layers[i] && this.layers[i].has(position)) {
         const val = this.layers[i].get(position);
         if (val === "" || val === " ") {
-          return null;
+          return "";
         }
         return val;
       }
     }
-    return null;
+    return "";
   }
 
   public entries() {

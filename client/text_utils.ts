@@ -11,7 +11,7 @@ export function layerToText(layer: ILayerView, box?: Box) {
     const start = new Vector(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
     const end = new Vector(Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER);
 
-    layer.keys().forEach((position) => {
+    layer.keys().forEach((position: Vector) => {
       start.x = Math.min(start.x, position.x);
       start.y = Math.min(start.y, position.y);
       end.x = Math.max(end.x, position.x);
@@ -28,14 +28,15 @@ export function layerToText(layer: ILayerView, box?: Box) {
 
   layer
     .entries()
-    .filter(([key, value]) => box.contains(key) && !!value)
-    .forEach(([key, value]) => {
-      if (value.charCodeAt(0) < 32 || value.charCodeAt(0) == 127) {
+    .filter(([key, value]: [Vector, string]) => box!.contains(key) && !!value)
+    .forEach(([key, value]: [Vector, string]) => {
+      let v = value;
+      if (v.charCodeAt(0) < 32 || v.charCodeAt(0) == 127) {
         // Every ascii value below 32 is control, and 127 is DEL.
         // Allow everything else and any unicode characters if they happen to be in the string.
-        value = " ";
+        v = " ";
       }
-      lineArrays[key.y - box.topLeft().y][key.x - box.topLeft().x] = value;
+      lineArrays[key.y - box!.topLeft().y][key.x - box!.topLeft().x] = v;
     });
   return lineArrays
     .map((lineValues) => lineValues.reduce((acc, curr) => acc + curr, ""))

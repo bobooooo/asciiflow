@@ -17,7 +17,7 @@ export class Vector implements IVector {
 
   constructor(public x: number, public y: number) {}
 
-  static fromPointerEvent(event: React.PointerEvent<any> | PointerEvent) {
+  static fromPointerEvent(event: PointerEvent) {
     return new Vector(event.clientX, event.clientY);
   }
 
