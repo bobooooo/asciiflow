@@ -5,3 +5,4 @@ user.bazelrc
 test-results/
 worktrees/
 mcp/dist/
+.claude/
