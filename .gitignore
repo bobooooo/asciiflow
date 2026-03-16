@@ -4,5 +4,4 @@ yarn-error.log
 user.bazelrc
 test-results/
 worktrees/
-mcp/dist/
 .claude/
